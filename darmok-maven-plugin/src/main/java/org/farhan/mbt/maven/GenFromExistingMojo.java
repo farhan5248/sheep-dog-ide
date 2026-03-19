@@ -35,12 +35,6 @@ public class GenFromExistingMojo extends AbstractMojo {
 	@Parameter(property = "host", defaultValue = "dev.sheepdogdev.io")
 	public String host;
 
-	@Parameter(property = "port", defaultValue = "80")
-	public int port;
-
-	@Parameter(property = "timeout", defaultValue = "300000")
-	public int timeout;
-
 	// Claude CLI properties
 	@Parameter(property = "modelRed", defaultValue = "sonnet")
 	public String modelRed;
@@ -64,13 +58,15 @@ public class GenFromExistingMojo extends AbstractMojo {
 	@Parameter(property = "pipeline", defaultValue = "forward")
 	public String pipeline;
 
+	@Parameter(property = "onlyChanges", defaultValue = "true")
+	public boolean onlyChanges;
+
 	// Instance fields
 	String baseDir;
 	private GitRunner git;
 	private MavenRunner maven;
 	CategoryLog mojoLog;
 	CategoryLog runnerLog;
-	private CategoryLog clientLog;
 
 	record ScenarioEntry(String file, String scenario, String tag) {}
 
@@ -102,13 +98,11 @@ public class GenFromExistingMojo extends AbstractMojo {
 		String date = LocalDate.now().toString();
 		mojoLog = new CategoryLog(getLog(), "mojo", logDir.resolve("darmok.mojo." + date + ".log"));
 		runnerLog = new CategoryLog(getLog(), "runner", logDir.resolve("darmok.runners." + date + ".log"));
-		clientLog = new CategoryLog(getLog(), "client", logDir.resolve("darmok.clients." + date + ".log"));
 	}
 
 	private void closeLogs() {
 		if (mojoLog != null) mojoLog.close();
 		if (runnerLog != null) runnerLog.close();
-		if (clientLog != null) clientLog.close();
 	}
 
 	public void execute() throws MojoExecutionException {
@@ -129,7 +123,7 @@ public class GenFromExistingMojo extends AbstractMojo {
 			int totalProcessed = 0;
 			ScenarioEntry entry;
 			while ((entry = getNextScenario()) != null) {
-				mojoLog.info("Processing Scenario: " + entry.scenario() + " [" + entry.tag() + "]");
+				mojoLog.info("Processing Scenario: " + entry.file() + "/" + entry.scenario());
 				processScenario(entry);
 				totalProcessed++;
 				mojoLog.info("");
@@ -178,24 +172,15 @@ public class GenFromExistingMojo extends AbstractMojo {
 		addTagToAsciidoc(fileName, scenarioName, tag);
 
 		// === RED PHASE ===
-		mojoLog.info("  Red: Running service...");
-		long redServiceStart = System.currentTimeMillis();
+		mojoLog.info("  Red: Running maven...");
+		long redMavenStart = System.currentTimeMillis();
 		int redExitCode = runRgrRed(tag);
-		long redServiceDuration = System.currentTimeMillis() - redServiceStart;
+		long redMavenDuration = System.currentTimeMillis() - redMavenStart;
 
 		if (redExitCode != 0 && redExitCode != 100) {
 			throw new MojoExecutionException("rgr-red failed with exit code " + redExitCode);
 		}
-		mojoLog.info("  Red: Completed service (" + formatDuration(redServiceDuration) + ")");
-
-		mojoLog.info("  Red: Running claude...");
-		long redClaudeStart = System.currentTimeMillis();
-		int claudeRedExitCode = runClaudeRgrRed(tag);
-		long redClaudeDuration = System.currentTimeMillis() - redClaudeStart;
-		if (claudeRedExitCode != 0) {
-			throw new MojoExecutionException("Claude rgr-red failed with exit code " + claudeRedExitCode);
-		}
-		mojoLog.info("  Red: Completed claude (" + formatDuration(redClaudeDuration) + ")");
+		mojoLog.info("  Red: Completed maven (" + formatDuration(redMavenDuration) + ")");
 
 		long greenDuration = 0;
 		long refactorDuration = 0;
@@ -242,8 +227,7 @@ public class GenFromExistingMojo extends AbstractMojo {
 
 		// === METRIC LINES ===
 		long totalDuration = System.currentTimeMillis() - totalStart;
-		mojoLog.info("METRIC|scenario=" + scenarioName + "|phase=red-service|duration_ms=" + redServiceDuration);
-		mojoLog.info("METRIC|scenario=" + scenarioName + "|phase=red-claude|duration_ms=" + redClaudeDuration);
+		mojoLog.info("METRIC|scenario=" + scenarioName + "|phase=red-maven|duration_ms=" + redMavenDuration);
 		mojoLog.info("METRIC|scenario=" + scenarioName + "|phase=green|duration_ms=" + greenDuration);
 		mojoLog.info("METRIC|scenario=" + scenarioName + "|phase=refactor|duration_ms=" + refactorDuration);
 		mojoLog.info("METRIC|scenario=" + scenarioName + "|phase=total|duration_ms=" + totalDuration);
@@ -411,18 +395,19 @@ public class GenFromExistingMojo extends AbstractMojo {
 
 	private int runRgrRed(String pattern) throws Exception {
 		String runnerClassName = pattern + "Test";
-		ServiceClient service = new ServiceClient(clientLog, host, port, timeout);
 
 		mojoLog.debug("RGR-Red: Pattern=" + pattern + ", Runner=" + runnerClassName);
 
-		// Step 1: AsciiDoctor to UML (direct REST call to service)
+		// Step 1: AsciiDoctor to UML (maven call from specsDir)
 		mojoLog.debug("  STEP 1: AsciiDoctor to UML Conversion");
-		service.executeToUML("asciidoctor/", "ConvertAsciidoctorToUML", pattern,
-				baseDir + "/" + specsDir, ".asciidoc");
+		String specsDirAbsolute = Path.of(baseDir, specsDir).normalize().toString();
+		maven.run(specsDirAbsolute, "org.farhan:sheep-dog-dev-svc-maven-plugin:asciidoctor-to-uml",
+				"-Dtags=" + pattern, "-Dhost=" + host, "-DonlyChanges=" + onlyChanges);
 
-		// Step 2: UML to Cucumber-Guice (direct REST call to service)
+		// Step 2: UML to Cucumber-Guice (maven call from baseDir)
 		mojoLog.debug("  STEP 2: UML to Cucumber-Guice Conversion");
-		service.executeFromUML("cucumber/", "ConvertUMLToCucumberGuice", pattern, baseDir);
+		maven.run(baseDir, "org.farhan:sheep-dog-dev-svc-maven-plugin:uml-to-cucumber-guice",
+				"-Dtags=" + pattern, "-Dhost=" + host, "-DonlyChanges=" + onlyChanges);
 
 		// Step 3: Generate runner class
 		mojoLog.debug("  STEP 3: Generate Runner Class");
@@ -444,11 +429,6 @@ public class GenFromExistingMojo extends AbstractMojo {
 			mojoLog.debug("  Tests are FAILING - ready for green phase (returning 0)");
 			return 0;
 		}
-	}
-
-	private int runClaudeRgrRed(String pattern) throws Exception {
-		ClaudeRunner claude = new ClaudeRunner(runnerLog, modelRed, maxRetries, retryWaitSeconds);
-		return claude.run(baseDir + "/../..", "/rgr-red " + project.getArtifactId() + " " + pattern);
 	}
 
 	private int runRgrGreen(String pattern) throws Exception {

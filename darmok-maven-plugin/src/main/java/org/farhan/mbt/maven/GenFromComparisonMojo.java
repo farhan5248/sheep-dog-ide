@@ -27,12 +27,6 @@ public class GenFromComparisonMojo extends AbstractMojo {
 	@Parameter(property = "host", defaultValue = "dev.sheepdogdev.io")
 	public String host;
 
-	@Parameter(property = "port", defaultValue = "80")
-	public int port;
-
-	@Parameter(property = "timeout", defaultValue = "300000")
-	public int timeout;
-
 	// Claude CLI properties
 	@Parameter(property = "modelRed", defaultValue = "sonnet")
 	public String modelRed;
@@ -59,6 +53,9 @@ public class GenFromComparisonMojo extends AbstractMojo {
 	@Parameter(property = "pipeline", defaultValue = "forward")
 	public String pipeline;
 
+	@Parameter(property = "onlyChanges", defaultValue = "true")
+	public boolean onlyChanges;
+
 	public void execute() throws MojoExecutionException {
 		GenFromExistingMojo processor = new GenFromExistingMojo();
 		processor.project = project;
@@ -66,8 +63,6 @@ public class GenFromComparisonMojo extends AbstractMojo {
 		processor.asciidocDir = asciidocDir;
 		processor.scenariosFile = scenariosFile;
 		processor.host = host;
-		processor.port = port;
-		processor.timeout = timeout;
 		processor.modelRed = modelRed;
 		processor.modelGreen = modelGreen;
 		processor.modelRefactor = modelRefactor;
@@ -75,6 +70,7 @@ public class GenFromComparisonMojo extends AbstractMojo {
 		processor.maxRetries = maxRetries;
 		processor.retryWaitSeconds = retryWaitSeconds;
 		processor.pipeline = pipeline;
+		processor.onlyChanges = onlyChanges;
 		processor.setLog(getLog());
 
 		try {
