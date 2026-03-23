@@ -31,7 +31,7 @@ jobs:
     secrets: inherit   
 
   merge-into-develop:
-    needs: [sheep-dog-dev-svc-maven-plugin]
+    needs: [darmok-maven-plugin]
     uses: farhan5248/sheep-dog-ops/.github/workflows/merge.yml@main
     with:
       source: 'main'
