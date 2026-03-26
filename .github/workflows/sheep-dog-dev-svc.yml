@@ -14,6 +14,14 @@ jobs:
       plugin: 'Maven'
     secrets: inherit
 
+  sheep-dog-dev-mcp:
+    needs: [sheep-dog-dev-svc]
+    uses: farhan5248/sheep-dog-ops/.github/workflows/maven-release.yml@main
+    with:
+      project: 'sheep-dog-dev-mcp'
+      plugin: 'Maven'
+    secrets: inherit    
+
   sheep-dog-dev-svc-maven-plugin:
     needs: [sheep-dog-dev-svc]
     uses: farhan5248/sheep-dog-ops/.github/workflows/maven-release.yml@main

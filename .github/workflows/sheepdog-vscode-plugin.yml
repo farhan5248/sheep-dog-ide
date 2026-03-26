@@ -1,4 +1,4 @@
-name: Publish SheepDog AsciiDoc Release
+name: Publish SheepDog VS Code Plugin Release
 on:
   workflow_dispatch:
 permissions:
@@ -6,18 +6,11 @@ permissions:
   packages: write
 
 jobs:
-  sheepdog-asciidoc:
-    uses: farhan5248/sheep-dog-ops/.github/workflows/gradle-release.yml@main
-    with:
-      project: 'sheepdogasciidoc.parent'
-    secrets: inherit
-
   sheep-dog-vscode-plugin:
-    needs: [sheepdog-asciidoc]
     uses: farhan5248/sheep-dog-ops/.github/workflows/gradle-release.yml@main
     with:
       project: 'sheepdogvscodeplugin'
-    secrets: inherit      
+    secrets: inherit
 
   merge-into-develop:
     needs: [sheep-dog-vscode-plugin]
