@@ -42,21 +42,20 @@ jobs:
       project: 'darmok-maven-plugin'
     secrets: inherit
 
-  sheep-dog-asciidoc:
-    uses: farhan5248/sheep-dog-ops/.github/workflows/gradle-snapshot.yml@main
+  sheep-dog-dev-maven-plugin:
+    uses: farhan5248/sheep-dog-ops/.github/workflows/maven-snapshot.yml@main
     with:
-      project: 'sheepdogasciidoc.parent'
+      project: 'sheep-dog-dev-maven-plugin'
     secrets: inherit
 
   sheep-dog-vscode-plugin:
-    needs: [sheep-dog-asciidoc]
-    uses: farhan5248/sheep-dog-ops/.github/workflows/gradle-snapshot.yml@main
+    uses: farhan5248/sheep-dog-ops/.github/workflows/npm-snapshot.yml@main
     with:
-      project: 'sheepdogvscodeplugin'
+      project: 'sheep-dog-vscode-plugin'
     secrets: inherit
 
   merge-into-main:
-    needs: [sheep-dog-dev-mcp, darmok-maven-plugin, sheep-dog-vscode-plugin]
+    needs: [sheep-dog-dev-mcp, darmok-maven-plugin, sheep-dog-dev-maven-plugin, sheep-dog-vscode-plugin]
     uses: farhan5248/sheep-dog-ops/.github/workflows/merge.yml@main
     with:
       source: 'develop'
