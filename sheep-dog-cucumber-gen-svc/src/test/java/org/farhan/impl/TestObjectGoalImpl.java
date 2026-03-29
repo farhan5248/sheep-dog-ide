@@ -28,7 +28,7 @@ public class TestObjectGoalImpl extends TestObjectSheepDogImpl {
 		// restTemplate.getInterceptors().add(new CaptureInterceptor());
 	}
 
-	@Value("${sheepdog.host:dev.sheepdogdev.io}")
+	@Value("${sheepdog.host:dev.sheepdog.io}")
 	private String serverHost;
 
 	@Value("${sheepdog.port:80}")
@@ -101,7 +101,7 @@ public class TestObjectGoalImpl extends TestObjectSheepDogImpl {
 		long startTime = System.currentTimeMillis();
 		while (System.currentTimeMillis() - startTime < timeout) {
 			try {
-				ResponseEntity<String> response = restTemplate.getForEntity(getHost() + "actuator/health",
+				ResponseEntity<String> response = restTemplate.getForEntity(getHost() + "sheep-dog-cucumber-gen-svc/actuator/health",
 						String.class);
 				if (response.getStatusCode() == HttpStatus.OK && response.getBody().contains("\"status\":\"UP\"")) {
 					logger.info("Service ready");

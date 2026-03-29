@@ -37,7 +37,7 @@ scripts/forward-engineer.bat
 # Or manually:
 mvn clean
 mvn org.farhan:sheep-dog-dev-svc-maven-plugin:uml-to-cucumber-spring \
-  -Dtags="round-trip" -Dhost="dev.sheepdogdev.io"
+  -Dtags="round-trip" -Dhost="dev.sheepdog.io"
 ```
 
 ### Reverse Engineering (Service-Based)

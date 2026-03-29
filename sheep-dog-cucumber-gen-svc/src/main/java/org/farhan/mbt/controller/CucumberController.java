@@ -40,7 +40,7 @@ public class CucumberController implements ApplicationListener<ApplicationReadyE
 	private final CucumberService service;
 	private final UMLService umlService;
 
-	@Value("${sheepdog.host:dev.sheepdogdev.io}")
+	@Value("${sheepdog.host:dev.sheepdog.io}")
 	private String serverHost;
 
 	@Value("${sheepdog.port:80}")

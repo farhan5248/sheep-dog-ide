@@ -1,7 +1,7 @@
 org.springframework.cloud.contract.spec.Contract.make {
     request {
         method 'GET'
-        url '/actuator/health'
+        url '/sheep-dog-cucumber-gen-svc/actuator/health'
     }
     response {
         status 200

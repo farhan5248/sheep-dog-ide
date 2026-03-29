@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 public abstract class TestObjectGoalImpl extends TestObjectSheepDogImpl {
 
-	@Value("${sheepdog.host:dev.sheepdogdev.io}")
+	@Value("${sheepdog.host:dev.sheepdog.io}")
 	private String serverHost;
 
 	@Value("${sheepdog.port:80}")

@@ -3,10 +3,11 @@ kind: Service
 metadata:
   name: sheep-dog-dev-mcp
   labels:
-    app: sheep-dog-dev
+    app: sheep-dog
+    component: sheep-dog-dev-mcp
 spec:
   selector:
-    app: sheep-dog-dev-mcp
+    component: sheep-dog-dev-mcp
   ports:
     - name: sheep-dog-dev-mcp
       port: 80

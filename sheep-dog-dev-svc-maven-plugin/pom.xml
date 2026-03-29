@@ -18,6 +18,7 @@
 			UTF-8</project.build.sourceEncoding>
 		<java.version>21</java.version>
 		<sheep-dog-grammar.version>1.41-SNAPSHOT</sheep-dog-grammar.version>
+		<sheepdog.host>dev.sheepdog.io</sheepdog.host>
 	</properties>
 
 	<scm>
@@ -265,6 +266,9 @@
 						<include>**/*IT</include>
 						<include>**/*IntegrationTest</include>
 					</includes>
+					<systemPropertyVariables>
+						<sheepdog.host>${sheepdog.host}</sheepdog.host>
+					</systemPropertyVariables>
 				</configuration>
 				<executions>
 					<execution>
@@ -327,9 +331,42 @@
 								<argument>delete</argument>
 								<argument>deployments</argument>
 								<argument>-l</argument>
-								<argument>app=sheep-dog-dev</argument>
+								<argument>component=sheep-dog-asciidoc-api-svc</argument>
 								<argument>-n</argument>
-								<argument>failsafe</argument>
+								<argument>dev</argument>
+							</arguments>
+						</configuration>
+					</execution>
+					<execution>
+						<id>delete-cucumber-gen-svc</id>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>kubectl</executable>
+							<arguments>
+								<argument>delete</argument>
+								<argument>deployments</argument>
+								<argument>-l</argument>
+								<argument>component=sheep-dog-cucumber-gen-svc</argument>
+								<argument>-n</argument>
+								<argument>dev</argument>
+							</arguments>
+						</configuration>
+					</execution>
+					<execution>
+						<id>start-shared</id>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>kubectl</executable>
+							<arguments>
+								<argument>apply</argument>
+								<argument>-k</argument>
+								<argument>../../sheep-dog-qa/sheep-dog-specs/kubernetes/shared/overlays/dev</argument>
 							</arguments>
 						</configuration>
 					</execution>
@@ -344,8 +381,7 @@
 							<arguments>
 								<argument>apply</argument>
 								<argument>-k</argument>
-								<argument>
-									../sheep-dog-asciidoc-api-svc/kubernetes/overlays/failsafe</argument>
+								<argument>../sheep-dog-asciidoc-api-svc/kubernetes/overlays/dev</argument>
 							</arguments>
 						</configuration>
 					</execution>
@@ -360,8 +396,7 @@
 							<arguments>
 								<argument>apply</argument>
 								<argument>-k</argument>
-								<argument>
-									../sheep-dog-cucumber-gen-svc/kubernetes/overlays/failsafe</argument>
+								<argument>../sheep-dog-cucumber-gen-svc/kubernetes/overlays/dev</argument>
 							</arguments>
 						</configuration>
 					</execution>

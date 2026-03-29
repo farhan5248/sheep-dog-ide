@@ -29,7 +29,7 @@ public abstract class DarmokMojo extends AbstractMojo {
 	public String scenariosFile;
 
 	// Server properties
-	@Parameter(property = "host", defaultValue = "dev.sheepdogdev.io")
+	@Parameter(property = "host", defaultValue = "dev.sheepdog.io")
 	public String host;
 
 	// Claude CLI properties

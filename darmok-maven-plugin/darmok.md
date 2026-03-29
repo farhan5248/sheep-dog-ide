@@ -34,7 +34,7 @@ mvn org.farhan:darmok-maven-plugin:gen-from-comparison
 | specsDir | ../../sheep-dog-qa/sheep-dog-specs | Path to specs project (relative to baseDir) |
 | asciidocDir | ../../sheep-dog-qa/sheep-dog-specs/src/test/resources/asciidoc/specs | Path to asciidoc files |
 | scenariosFile | scenarios-list.txt | Scenarios list file in baseDir |
-| host | dev.sheepdogdev.io | Service host |
+| host | dev.sheepdog.io | Service host |
 | port | 80 | Service port |
 | timeout | 300000 | Service health check timeout (ms) |
 | modelRed | sonnet | Claude CLI model for red phase |

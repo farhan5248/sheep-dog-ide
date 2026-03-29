@@ -47,7 +47,7 @@ public abstract class MBTMojo extends AbstractMojo {
     @Parameter(property = "tags", defaultValue = "")
     public String tags;
 
-    @Parameter(property = "host", defaultValue = "sheepdogdev.io")
+    @Parameter(property = "host", defaultValue = "dev.sheepdog.io")
     public String host;
 
     @Parameter(property = "port", defaultValue = "80")
@@ -185,7 +185,7 @@ public abstract class MBTMojo extends AbstractMojo {
         long startTime = System.currentTimeMillis();
         while (System.currentTimeMillis() - startTime < timeout) {
             try {
-                ResponseEntity<String> response = restTemplate.getForEntity(getHost() + "actuator/health",
+                ResponseEntity<String> response = restTemplate.getForEntity(getHost() + "sheep-dog-cucumber-gen-svc/actuator/health",
                         String.class);
                 if (response.getStatusCode() == HttpStatus.OK && response.getBody().contains("\"status\":\"UP\"")) {
                     getLog().info("Service ready");

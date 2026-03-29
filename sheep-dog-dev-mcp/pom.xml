@@ -268,6 +268,69 @@
                 <version>3.1.0</version>
                 <executions>
                     <execution>
+                        <id>delete-stack</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>kubectl</executable>
+                            <arguments>
+                                <argument>delete</argument>
+                                <argument>deployments</argument>
+                                <argument>-l</argument>
+                                <argument>component=sheep-dog-dev-mcp</argument>
+                                <argument>-n</argument>
+                                <argument>dev</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>start-shared</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>kubectl</executable>
+                            <arguments>
+                                <argument>apply</argument>
+                                <argument>-k</argument>
+                                <argument>../../sheep-dog-qa/sheep-dog-specs/kubernetes/shared/overlays/dev</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>start-asciidoc-api-svc</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>kubectl</executable>
+                            <arguments>
+                                <argument>apply</argument>
+                                <argument>-k</argument>
+                                <argument>../sheep-dog-asciidoc-api-svc/kubernetes/overlays/dev</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>start-cucumber-gen-svc</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>kubectl</executable>
+                            <arguments>
+                                <argument>apply</argument>
+                                <argument>-k</argument>
+                                <argument>../sheep-dog-cucumber-gen-svc/kubernetes/overlays/dev</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
                         <id>start-stack</id>
                         <phase>pre-integration-test</phase>
                         <goals>
@@ -278,7 +341,7 @@
                             <arguments>
                                 <argument>apply</argument>
                                 <argument>-k</argument>
-                                <argument>kubernetes/overlays/failsafe</argument>
+                                <argument>kubernetes/overlays/dev</argument>
                             </arguments>
                         </configuration>
                     </execution>
