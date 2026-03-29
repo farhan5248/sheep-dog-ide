@@ -334,6 +334,22 @@
 						</configuration>
 					</execution>
 					<execution>
+						<id>start-asciidoc-api-svc</id>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>kubectl</executable>
+							<arguments>
+								<argument>apply</argument>
+								<argument>-k</argument>
+								<argument>
+									../sheep-dog-asciidoc-api-svc/kubernetes/overlays/failsafe</argument>
+							</arguments>
+						</configuration>
+					</execution>
+					<execution>
 						<id>start-stack</id>
 						<phase>pre-integration-test</phase>
 						<goals>

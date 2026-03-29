@@ -12,6 +12,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: sheep-dog-dev-svc
+                name: sheep-dog-asciidoc-api-svc
                 port:
                   number: 80

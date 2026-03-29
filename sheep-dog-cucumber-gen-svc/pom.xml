@@ -460,9 +460,24 @@
 								<argument>delete</argument>
 								<argument>deployments</argument>
 								<argument>-l</argument>
-								<argument>app=sheep-dog-cucumber-gen-svc</argument>
+								<argument>app=sheep-dog-dev</argument>
 								<argument>-n</argument>
 								<argument>failsafe</argument>
+							</arguments>
+						</configuration>
+					</execution>
+					<execution>
+						<id>start-asciidoc-api-svc</id>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>kubectl</executable>
+							<arguments>
+								<argument>apply</argument>
+								<argument>-k</argument>
+								<argument>../sheep-dog-asciidoc-api-svc/kubernetes/overlays/failsafe</argument>
 							</arguments>
 						</configuration>
 					</execution>
