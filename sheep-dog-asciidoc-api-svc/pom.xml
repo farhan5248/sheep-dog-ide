@@ -219,6 +219,7 @@
 				<extensions>true</extensions>
 				<configuration>
 					<baseClassForTests>org.farhan.runners.surefire.springboot.StubRunnerTestConfig</baseClassForTests>
+					<failOnNoContracts>false</failOnNoContracts>
 				</configuration>
 			</plugin>
 			<plugin>
