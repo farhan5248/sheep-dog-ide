@@ -1,4 +1,4 @@
-@sheep-dog-dev @svc-maven-plugin
+@cucumber-gen @cucumber-gen-svc @svc-maven-plugin
 Feature: Update Existing Code
 
   \@sheep-dog-dev

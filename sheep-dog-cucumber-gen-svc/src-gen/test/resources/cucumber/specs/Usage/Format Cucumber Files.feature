@@ -1,4 +1,4 @@
-@sheep-dog-dev @svc-maven-plugin
+@cucumber-gen @cucumber-gen-svc @svc-maven-plugin
 Feature: Format Cucumber Files
 
   \@sheep-dog-dev

@@ -31,7 +31,7 @@ public class MessageConsumer {
         this.umlService = umlService;
     }
 
-    @JmsListener(destination = JmsConfig.SOURCE_FILES_QUEUE)
+    @JmsListener(destination = JmsConfig.ASCIIDOC_API_QUEUE)
     public void receiveSourceFile(TransformableFile file) throws JMSException {
         logger.info("Received source file: {}", file.getFileName());
 

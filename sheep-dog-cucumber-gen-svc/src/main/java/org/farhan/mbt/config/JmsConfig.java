@@ -22,7 +22,7 @@ import jakarta.jms.JMSException;
 @EnableJms
 public class JmsConfig {
 
-    public static final String SOURCE_FILES_QUEUE = "source-files-queue";
+    public static final String CUCUMBER_GEN_QUEUE = "cucumber-gen-queue";
     
     @Value("${spring.artemis.host}")
     private String artemisHost;

@@ -112,7 +112,7 @@ public class AsciiDoctorService {
 
     public void convertSourceObject(Converter mojo, TransformableFile mtr) {
         try {
-            jmsTemplate.convertAndSend(JmsConfig.SOURCE_FILES_QUEUE, mtr);
+            jmsTemplate.convertAndSend(JmsConfig.ASCIIDOC_API_QUEUE, mtr);
             MessageConsumer.IN_FLIGHT = 1;
             // TODO temp hack until separate queues are created (see issue #195)
             long waitStart = System.currentTimeMillis();
@@ -150,7 +150,7 @@ public class AsciiDoctorService {
 
         try (jakarta.jms.Connection connection = jmsTemplate.getConnectionFactory().createConnection();
              jakarta.jms.Session session = connection.createSession(false, jakarta.jms.Session.AUTO_ACKNOWLEDGE)) {
-            Queue queue = session.createQueue(JmsConfig.SOURCE_FILES_QUEUE);
+            Queue queue = session.createQueue(JmsConfig.ASCIIDOC_API_QUEUE);
 
             while (System.currentTimeMillis() - startTime < timeoutMillis) {
                 // Check queue depth

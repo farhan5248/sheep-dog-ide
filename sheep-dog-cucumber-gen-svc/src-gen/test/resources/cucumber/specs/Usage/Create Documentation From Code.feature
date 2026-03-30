@@ -1,4 +1,4 @@
-@sheep-dog-dev @svc-maven-plugin
+@cucumber-gen @cucumber-gen-svc @svc-maven-plugin
 Feature: Create Documentation From Code
 
   \@sheep-dog-dev
