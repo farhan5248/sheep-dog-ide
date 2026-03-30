@@ -13,6 +13,12 @@ public abstract class TestObjectGoalImpl extends TestObjectSheepDogImpl {
 	@Value("${sheepdog.port:80}")
 	private int serverPort;
 
+	@Value("${sheepdog.asciidocPort:0}")
+	private int asciidocPort;
+
+	@Value("${sheepdog.cucumberPort:0}")
+	private int cucumberPort;
+
 	@Value("${sheepdog.timeout:120000}")
 	private int timeout;
 
@@ -28,6 +34,8 @@ public abstract class TestObjectGoalImpl extends TestObjectSheepDogImpl {
 			mojo.baseDir = baseDir;
 			mojo.host = serverHost;
 			mojo.port = serverPort;
+			mojo.asciidocPort = asciidocPort;
+			mojo.cucumberPort = cucumberPort;
 			mojo.timeout = timeout;
 			if (TestConfig.scenarioId != null) {
 				mojo.setScenarioId(TestConfig.scenarioId);

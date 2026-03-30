@@ -15,7 +15,6 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>21</java.version>
-		<maven.deploy.skip>true</maven.deploy.skip>
 		<sheep-dog-asciidoc-api.version>1.1-SNAPSHOT</sheep-dog-asciidoc-api.version>
 		<sheep-dog-cucumber-gen.version>1.1-SNAPSHOT</sheep-dog-cucumber-gen.version>
 		<docker.registry.github>ghcr.io</docker.registry.github>
@@ -219,6 +218,19 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<classifier>exec</classifier>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-contract-maven-plugin</artifactId>
+				<version>${spring-cloud-contract.version}</version>
+				<extensions>true</extensions>
+				<configuration>
+					<baseClassForTests>org.farhan.runners.surefire.springboot.StubRunnerTestConfig</baseClassForTests>
+					<failOnNoContracts>false</failOnNoContracts>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -258,6 +270,9 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
+					<excludes>
+						<exclude>**/ContractVerifierTest.java</exclude>
+					</excludes>
 					<properties>
 						<!-- Work around. Surefire does not include enough
                              information to disambiguate between different
@@ -377,6 +392,7 @@
 									<artifactId>${project.artifactId}</artifactId>
 									<version>${project.version}</version>
 									<type>jar</type>
+									<classifier>exec</classifier>
 									<outputDirectory>${project.build.directory}/dependency</outputDirectory>
 									<excludes>**/sheep*.jar</excludes>
 								</artifactItem>
@@ -385,6 +401,7 @@
 									<artifactId>${project.artifactId}</artifactId>
 									<version>${project.version}</version>
 									<type>jar</type>
+									<classifier>exec</classifier>
 									<outputDirectory>
 										${project.build.directory}/dependency-org-farhan</outputDirectory>
 									<includes>**/sheep*.jar</includes>

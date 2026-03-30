@@ -53,6 +53,12 @@ public abstract class MBTMojo extends AbstractMojo {
     @Parameter(property = "port", defaultValue = "80")
     public int port;
 
+    @Parameter(property = "asciidocPort", defaultValue = "0")
+    public int asciidocPort;
+
+    @Parameter(property = "cucumberPort", defaultValue = "0")
+    public int cucumberPort;
+
     @Parameter(property = "timeout", defaultValue = "300000")
     public int timeout;
 
@@ -61,6 +67,19 @@ public abstract class MBTMojo extends AbstractMojo {
 
     private String getHost() {
         return "http://" + host + ":" + port + "/";
+    }
+
+    private int getPortForResource(String resource) {
+        if (resource.startsWith("asciidoctor") && asciidocPort > 0) {
+            return asciidocPort;
+        } else if (resource.startsWith("cucumber") && cucumberPort > 0) {
+            return cucumberPort;
+        }
+        return port;
+    }
+
+    private String getHostForResource(String resource) {
+        return "http://" + host + ":" + getPortForResource(resource) + "/";
     }
 
     private <T> T retry(Supplier<T> action, String operation) throws Exception {
@@ -84,7 +103,7 @@ public abstract class MBTMojo extends AbstractMojo {
 
     private void clearObjects(String resource, String goal) throws Exception {
         TreeMap<String, String> parameters = new TreeMap<String, String>();
-        String url = getHost() + resource + "/clear" + goal + "Objects";
+        String url = getHostForResource(resource) + resource + "/clear" + goal + "Objects";
         if (!tags.isEmpty()) {
             parameters.put("tags", tags);
             url += "?tags={tags}";
@@ -98,7 +117,7 @@ public abstract class MBTMojo extends AbstractMojo {
 
     private String convertObject(String resource, String goal, String fileName, String contents) throws Exception {
         TreeMap<String, String> parameters = new TreeMap<String, String>();
-        String url = getHost() + resource + "/run" + goal + "?fileName={fileName}";
+        String url = getHostForResource(resource) + resource + "/run" + goal + "?fileName={fileName}";
         if (!tags.isEmpty()) {
             parameters.put("tags", tags);
             url += "&tags={tags}";
@@ -115,7 +134,7 @@ public abstract class MBTMojo extends AbstractMojo {
 
     private List<TransformableFile> getFileChecksums(String resource, String goal) throws Exception {
         TreeMap<String, String> parameters = new TreeMap<String, String>();
-        String url = getHost() + resource + "/get" + goal + "FileChecksums";
+        String url = getHostForResource(resource) + resource + "/get" + goal + "FileChecksums";
         if (!tags.isEmpty()) {
             parameters.put("tags", tags);
             url += "?tags={tags}";
@@ -131,7 +150,7 @@ public abstract class MBTMojo extends AbstractMojo {
 
     private void deleteObject(String resource, String goal, String fileName) throws Exception {
         TreeMap<String, String> parameters = new TreeMap<String, String>();
-        String url = getHost() + resource + "/delete" + goal + "Object?fileName={fileName}";
+        String url = getHostForResource(resource) + resource + "/delete" + goal + "Object?fileName={fileName}";
         if (!tags.isEmpty()) {
             parameters.put("tags", tags);
             url += "&tags={tags}";
@@ -163,7 +182,7 @@ public abstract class MBTMojo extends AbstractMojo {
 
     private List<TransformableFile> getObjectNames(String resource, String goal) throws Exception {
         TreeMap<String, String> parameters = new TreeMap<String, String>();
-        String url = getHost() + resource + "/get" + goal + "ObjectNames";
+        String url = getHostForResource(resource) + resource + "/get" + goal + "ObjectNames";
         if (!tags.isEmpty()) {
             parameters.put("tags", tags);
             url += "?tags={tags}";
@@ -182,13 +201,17 @@ public abstract class MBTMojo extends AbstractMojo {
     }
 
     private void waitForService() throws MojoExecutionException {
+        waitForHealthCheck(getHostForResource("asciidoctor") + "sheep-dog-asciidoc-api-svc/actuator/health");
+        waitForHealthCheck(getHostForResource("cucumber") + "sheep-dog-cucumber-gen-svc/actuator/health");
+    }
+
+    private void waitForHealthCheck(String healthUrl) throws MojoExecutionException {
         long startTime = System.currentTimeMillis();
         while (System.currentTimeMillis() - startTime < timeout) {
             try {
-                ResponseEntity<String> response = restTemplate.getForEntity(getHost() + "sheep-dog-cucumber-gen-svc/actuator/health",
-                        String.class);
+                ResponseEntity<String> response = restTemplate.getForEntity(healthUrl, String.class);
                 if (response.getStatusCode() == HttpStatus.OK && response.getBody().contains("\"status\":\"UP\"")) {
-                    getLog().info("Service ready");
+                    getLog().info("Service ready: " + healthUrl);
                     return;
                 }
             } catch (Exception e) {
