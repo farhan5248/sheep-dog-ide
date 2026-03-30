@@ -17,11 +17,6 @@ public class UmlToAsciidoctorGoalImpl extends TestObjectGoalImpl implements UmlT
 	}
 
 	@Override
-	public void setExecuted(HashMap<String, String> keyMap) {
-		runGoal("asciidoctor", "ConvertUMLToAsciidoctor");
-	}
-
-	@Override
 	public void setExecutedWith(HashMap<String, String> keyMap) {
 		runGoal("asciidoctor", "ConvertUMLToAsciidoctor");
 	}

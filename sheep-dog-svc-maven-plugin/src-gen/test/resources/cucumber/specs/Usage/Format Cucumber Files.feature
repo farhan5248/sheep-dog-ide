@@ -1,8 +1,7 @@
-@sheep-dog-dev @svc-maven-plugin
+@cucumber-gen @cucumber-gen-svc @svc-maven-plugin
 Feature: Format Cucumber Files
 
-  \@sheep-dog-dev
-  \@svc-maven-plugin
+  \@cucumber-gen \@cucumber-gen-svc \@svc-maven-plugin
   TODO Make more changes to the source file to demonstrate all the formatting changes.
 
   Scenario: Format a feature file
