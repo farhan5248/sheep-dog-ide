@@ -197,6 +197,9 @@
 							cucumber.junit-platform.naming-strategy=long
 						</configurationParameters>
 					</properties>
+					<systemPropertyVariables>
+						<maven.repo.local>${settings.localRepository}</maven.repo.local>
+					</systemPropertyVariables>
 				</configuration>
 			</plugin>
 			<plugin>
