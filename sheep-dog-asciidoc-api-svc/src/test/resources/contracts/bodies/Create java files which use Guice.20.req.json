@@ -1,6 +1,6 @@
 = Test-Suite: Process
 
-@tag1
+@api-and-gen
 Desc 1
 
 == Test-Case: Story One
