@@ -1,6 +1,6 @@
 # Sheep Dog IDE
 
-IDE plugins providing AsciiDoc language support with syntax highlighting and LSP.
+IDE plugins that provide real-time AsciiDoc language support. The LSP server from sheep-dog-core (sheepdogasciidoc.parent) powers both plugins, providing syntax highlighting, content assist, validation, and quick fixes as specifications are edited.
 
 ## Projects
 
