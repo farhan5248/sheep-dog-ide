@@ -2,7 +2,7 @@
 <feature
 	id="sheepdogeclipseplugin.feature"
 	label="SheepDog AsciiDoc Eclipse Plugin"
-	version="1.1.1"
+	version="1.1.2.qualifier"
 	provider-name="farhan5248">
 
 	<plugin
