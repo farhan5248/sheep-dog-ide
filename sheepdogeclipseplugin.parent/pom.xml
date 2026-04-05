@@ -15,7 +15,6 @@
 		<moduleProperties></moduleProperties>
 		<systemProperties></systemProperties>
 		<additionalTestArguments></additionalTestArguments>
-		<sheep-dog-mgmt-maven-plugin.version>1.17-SNAPSHOT</sheep-dog-mgmt-maven-plugin.version>
 	</properties>
 	<modules>
 		<module>sheepdogeclipseplugin</module>
@@ -98,7 +97,7 @@
 				<plugin>
 					<groupId>org.farhan</groupId>
 					<artifactId>sheep-dog-mgmt-maven-plugin</artifactId>
-					<version>${sheep-dog-mgmt-maven-plugin.version}</version>
+					<version>1.16</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>
