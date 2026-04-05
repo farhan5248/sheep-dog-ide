@@ -10,7 +10,6 @@ jobs:
     uses: farhan5248/sheep-dog-ops/.github/workflows/release-maven.yml@main
     with:
       project: 'sheepdogeclipseplugin.parent'
-      plugin: 'Sheep'
     secrets: inherit
 
   merge-into-develop:
