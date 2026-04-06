@@ -10,6 +10,9 @@ on:
       - '**/pom.xml'
       - '**/build.gradle'
       - '**/package.json'
+concurrency:
+  group: sheep-dog-ide
+  cancel-in-progress: false
 permissions:
   contents: write
   packages: write

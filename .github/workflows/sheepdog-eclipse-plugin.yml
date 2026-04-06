@@ -1,6 +1,9 @@
 name: Publish SheepDog Eclipse Plugin Release
 on:
   workflow_dispatch:
+concurrency:
+  group: sheep-dog-ide
+  cancel-in-progress: false
 permissions:
   contents: write
   packages: write
