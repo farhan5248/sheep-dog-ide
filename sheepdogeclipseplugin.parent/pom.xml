@@ -127,7 +127,7 @@
 	<repositories>
 		<repository>
 			<id>github</id>
-			<url>https://maven.pkg.github.com/farhan5248/sheep-dog-cloud</url>
+			<url>https://maven.pkg.github.com/farhan5248/sheep-dog-main</url>
 			<releases><enabled>true</enabled></releases>
 			<snapshots><enabled>true</enabled></snapshots>
 		</repository>
@@ -137,16 +137,6 @@
 			<url>http://nexus.codehaus.org/snapshots/</url>
 			<releases><enabled>false</enabled></releases>
 			<snapshots><enabled>false</enabled></snapshots>
-		</repository>
-		<repository>
-			<id>github-main</id>
-			<url>https://maven.pkg.github.com/farhan5248/sheep-dog-main</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
 		</repository>
 	</repositories>
 	<pluginRepositories>
