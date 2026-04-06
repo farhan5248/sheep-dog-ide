@@ -151,8 +151,8 @@
 	</repositories>
 	<pluginRepositories>
 		<pluginRepository>
-			<id>github-ops</id>
-			<url>https://maven.pkg.github.com/farhan5248/sheep-dog-ops</url>
+			<id>github-main</id>
+			<url>https://maven.pkg.github.com/farhan5248/sheep-dog-main</url>
 			<releases><enabled>true</enabled></releases>
 			<snapshots><enabled>true</enabled></snapshots>
 		</pluginRepository>
