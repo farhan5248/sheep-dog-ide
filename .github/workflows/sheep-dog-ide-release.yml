@@ -1,4 +1,5 @@
-name: Publish SheepDog Eclipse Plugin Release
+name: Publish Sheep Dog IDE Release
+
 on:
   workflow_dispatch:
 concurrency:
@@ -9,16 +10,8 @@ permissions:
   packages: write
 
 jobs:
-  sheep-dog-eclipse-plugin:
+  sheepdogeclipseplugin-parent:
     uses: farhan5248/sheep-dog-ops/.github/workflows/release-maven.yml@main
     with:
       project: 'sheepdogeclipseplugin.parent'
-    secrets: inherit
-
-  merge-into-develop:
-    needs: [sheep-dog-eclipse-plugin]
-    uses: farhan5248/sheep-dog-ops/.github/workflows/merge.yml@main
-    with:
-      source: 'main'
-      target: 'develop'
     secrets: inherit
