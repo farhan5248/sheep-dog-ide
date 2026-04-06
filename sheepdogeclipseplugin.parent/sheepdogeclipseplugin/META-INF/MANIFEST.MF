@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: SheepDog AsciiDoc Eclipse Plugin
 Bundle-SymbolicName: sheepdogeclipseplugin;singleton:=true
-Bundle-Version: 1.1.3.qualifier
+Bundle-Version: 1.1.3
 Bundle-Vendor: farhan5248
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-21
