@@ -16,8 +16,22 @@
 		<logback.version>1.5.12</logback.version>
 	</properties>
 
+	<dependencies>
+		<dependency>
+			<groupId>org.farhan</groupId>
+			<artifactId>sheepdogasciidoc</artifactId>
+			<version>${sheepdogasciidoc.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.farhan</groupId>
+			<artifactId>sheep-dog-grammar</artifactId>
+			<version>${sheep-dog-grammar.version}</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
 
-<build>
+	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
