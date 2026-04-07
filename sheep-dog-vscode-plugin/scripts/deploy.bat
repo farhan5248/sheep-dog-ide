@@ -1,4 +1,3 @@
 cd ..
-call gradle clean
-call gradle publish
-cd scripts 
+call mvn clean deploy > log.txt 2>&1
+cd scripts

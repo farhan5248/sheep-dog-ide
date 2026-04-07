@@ -1,4 +1,3 @@
 cd ..
-call gradle clean
-call gradle test jacocoTestReport
-cd scripts 
+call mvn clean verify > log.txt 2>&1
+cd scripts
