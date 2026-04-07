@@ -1,41 +1,33 @@
-# Xtext VS Code example
+# Sheep Dog VS Code Plugin
 
-This is a simple example showing the [Xtext](https://www.eclipse.org/Xtext/) integration for VS Code based on the Microsoft [Language Server Protocol](https://github.com/Microsoft/language-server-protocol).
+VS Code extension providing AsciiDoc language server integration for Sheep Dog specifications.
 
-The base is following simple grammar
+## Overview
+
+Gradle-based VS Code extension that embeds the Xtext AsciiDoc language server from sheepdogasciidoc.parent. Provides syntax highlighting, validation, code completion, go to definition, formatting, and code generation for AsciiDoc specification files.
+
+## Key Functionality
+
+- Syntax highlighting via TextMate grammar
+- Real-time validation with error markers
+- Code completion and content assist
+- Go to definition and find references
+- Document formatting
+- Document outline and symbol navigation
+- Code generation command
+
+## Technology
+
+- Gradle build
+- TypeScript (VS Code extension)
+- vscode-languageclient
+- Embeds Xtext LSP server JAR from sheepdogasciidoc.parent
+- Node.js 20
+
+## Build
 
 ```
-Model:
-    greetings+=Greeting*;
-    
-Greeting:
-    'Hello' name=ID ('from' from=[Greeting])? '!';
+scripts/install.bat
 ```
 
-A typical example model would look like (Open a new folder in VSCode and create the files)
-
-a.mydsl
-```
-Hello Xtext!
-Hello VSCode from Xtext!
-Hello ThisFile from Other!
-Hello you!
-```
-
-b.mydsl
-```
-/* this is a definition in another file */
-Hello Other!
-```
-
-The Xtext integration supports typical Xtext and Language Server features like
-
-* Syntax Highlighting
-* Validation
-* Goto Definition / Find References
-* Hover
-* Formatting
-* Mark Occurrences
-* Open Symbol
-
-A introductory article can be found [here](https://blogs.itemis.com/en/integrating-xtext-language-support-in-visual-studio-code)
+This runs `gradle clean installExtension --refresh-dependencies`.

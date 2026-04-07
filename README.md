@@ -6,8 +6,8 @@ IDE plugins that provide real-time AsciiDoc language support. The LSP server fro
 
 | Project | Description |
 |---------|-------------|
-| sheep-dog-vscode-plugin | VS Code extension (Gradle build, pulls LSP server from Maven) |
-| sheepdogeclipseplugin.parent | Eclipse LSP4E plugin |
+| sheep-dog-vscode-plugin | VS Code extension embedding the Xtext AsciiDoc LSP server |
+| sheepdogeclipseplugin.parent | Eclipse plugin running the Xtext AsciiDoc LSP server in-process via LSP4E |
 
 ## Build Commands
 
