@@ -4,14 +4,14 @@
 	<parent>
 		<groupId>org.farhan</groupId>
 		<artifactId>sheepdogeclipseplugin.parent</artifactId>
-		<version>1.1.5-SNAPSHOT</version>
+		<version>1.1.5</version>
 	</parent>
 	<artifactId>sheepdogeclipseplugin</artifactId>
 	<packaging>eclipse-plugin</packaging>
 
 	<properties>
-		<sheepdogasciidoc.version>1.14-SNAPSHOT</sheepdogasciidoc.version>
-		<sheep-dog-grammar.version>1.52-SNAPSHOT</sheep-dog-grammar.version>
+		<sheepdogasciidoc.version>1.15</sheepdogasciidoc.version>
+		<sheep-dog-grammar.version>1.53</sheep-dog-grammar.version>
 		<slf4j.version>2.0.16</slf4j.version>
 		<logback.version>1.5.12</logback.version>
 	</properties>
