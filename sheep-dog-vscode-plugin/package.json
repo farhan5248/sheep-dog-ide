@@ -2,7 +2,7 @@
     "name": "xtext-asciidoc-plugin",
     "displayName": "Xtext AsciiDoc Plugin",
     "description": "Xtext AsciiDoc Plugin for VS Code",
-    "version": "1.10.3-SNAPSHOT",
+    "version": "1.10.3",
     "publisher": "sheep-dog-tools",
     "icon": "images/xtext.png",
     "license": "EPL-1.0",
